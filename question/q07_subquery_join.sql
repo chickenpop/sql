@@ -215,7 +215,18 @@ from employees e
 
 
 -- employees, departments. locations. 각 도시(city)에 있는 모든 부서 사원들의 평균급여가 가장 낮은 도시부터 도시명(city)과 평균연봉, 해당 도시의 사원수를 가져오시오. 단, 도시에 근 무하는 사원이 10명 이상인 곳은 제외하고 가져오시오.
+-- 미해결
+select * from employees;
+select * from departments;
+select * from locations;
 
+select 
+    *
+from employees e
+    inner join departments d
+        on e.department_id = d.department_id
+            inner join locations l
+                on d.location_id = l.location_id;
             
             
 -- employees, jobs, job_history. ‘Public  Accountant’의 직책(job_title)으로 과거에 근무한 적이 있는 모든 사원의 사번과 이름을 가져오시오. 현재 ‘Public Accountant’의 직책(job_title)으로 근무하는 사원은 고려 하지 말것.
