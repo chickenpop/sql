@@ -85,4 +85,3 @@ from tblAddressBook
     group by job
         having job in ('건물주', '건물주자제분');
 
-
