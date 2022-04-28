@@ -29,6 +29,10 @@ select
     rnum 
 from (select salary.*, rownum as rnum from (select * from tblInsa where substr(ssn, 8, 1) = 2 order by basicpay+sudang) salary);
 
+
+
+
+
 -- 3. tblInsa. 여자 인원수가 (가장 많은 부서 및 인원수) 가져오시오. 
 
 select * from tblInsa where substr(ssn, 8, 1) = 2;
