@@ -7,3 +7,5 @@ SQL Developer practice space
 
 
 #### 22.04.26 깃허브 push에 관한 에러를 발견함 - 원인찾는중
+
+#### 22.04.28 git push origin 에러 해결중
