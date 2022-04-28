@@ -173,6 +173,18 @@ select
             when rnum = 3 then basicpay
             when rnum = 9 then -basicpay
             else null
-    end) as 차액
+    end) as 급여차액
 from (select salary.*, rownum as rnum from (select * from tblInsa where substr(ssn, 8, 1) = '1' order by basicpay desc) salary);
+
+
+-- 11. 서브 쿼리로 풀기
+select 
+    (select basicpay from (select salary.*, rownum as rnum from (select * from tblInsa where substr(ssn, 8, 1) = '1' order by basicpay desc) salary) where rnum = 3)
+    -
+    (select basicpay from (select salary.*, rownum as rnum from (select * from tblInsa where substr(ssn, 8, 1) = '1' order by basicpay desc) salary) where rnum = 9) as 급여차액
+from dual;
+
+
+
+
 
