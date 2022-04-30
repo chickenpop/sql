@@ -27,4 +27,6 @@ SQL Developer practice space
 
 # 문제점
 
-#### 22.04.26 깃허브 push는 성공, 잔디 인식 에러 문제 발견 > 22.04.28 remote, email, username 등 개인설정 수정 후 인식 성공 > 22.04.29 다시 같은 문제 발생 
+#### 22.04.26 깃허브 push는 성공, 잔디 인식 에러 문제 발견 > 22.04.28 remote, email, username 등 개인설정 수정 후 인식 성공 > 22.04.29 다시 같은 문제 발생
+
+#### 22.04.30 user.email, user.name을 삭제 후 재등록한 이후만 정상 인식함
