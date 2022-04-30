@@ -1,5 +1,6 @@
--- 9/36
+-- 11/36 22.04.30 4~5번 문제
 -- 1. employees. 'Munich' 도시에 위치한 부서에 소속된 직원들 명단?
+-- 1. 결과
 select 
     e.*
 from employees e
@@ -18,6 +19,7 @@ from employees e
 select * from tblMan;
 select * from tblWoman;
 
+-- 2. 결과
 select 
     m.name as 남자,
     m.height as 남자키,
@@ -36,7 +38,7 @@ select * from tblAddressBook;
 select max(count(*)) from tblAddressBook group by job; -- 학생(332명)
 
 select job from tblAddressBook group by job having count(*) = (select max(count(*)) from tblAddressBook group by job);
-
+-- 3. 결과
 select 
     hometown, 
     count(*) as 분포수
@@ -46,19 +48,54 @@ from tblAddressBook
             order by count(*) desc;
 
 -- 4. tblAddressBook. 이메일 도메인들 중 평균 아이디 길이가 가장 긴 이메일 사이트의 도메인은 무엇인가?
+select * from tblAddressBook;
 
+select substr(email, instr(email, '@')+1), count(*) from tblAddressBook group by substr(email, instr(email, '@')+1);
+
+select email, avg(length(substr(email, 1, instr(email, '@')-1))) as emailLen from tblAddressBook group by email;
+
+select max(avg(length(substr(email, 1, instr(email, '@')-1)))) as maxEmailLen from tblAddressBook group by substr(email, 1, instr(email, '@')-1);
+
+-- 4. 결과
+select substr(email, instr(email, '@')+1) as domain, 
+        avg(length(substr(email, 1, instr(email, '@')-1))) as emailLen
+from tblAddressBook
+    group by substr(email, instr(email, '@')+1)
+        having avg(length(substr(email, 1, instr(email, '@')-1))) 
+                = (select max(avg(length(substr(email, 1, instr(email, '@')-1)))) as maxEmailLen from tblAddressBook group by substr(email, instr(email, '@')+1));
 
 
 -- 5. tblAddressBook. 평균 나이가 가장 많은 출신(hometown)들이 가지고 있는 직업 중 가장 많은 직업은?
+select hometown, avg(age) as avgAge from tblAddressBook group by hometown;
+
+select max(avg(age)) from tblAddressBook group by hometown;
+
+select 
+    max(count(*)) 
+from tblAddressBook 
+    where hometown = (select hometown from tblAddressBook group by hometown having avg(age) = (select max(avg(age)) from tblAddressBook group by hometown)) group by job;
+
+-- 5. 결과
+select 
+    job 
+from tblAddressBook 
+    where hometown = (select hometown from tblAddressBook group by hometown having avg(age) = (select max(avg(age)) from tblAddressBook group by hometown))
+        group by job
+            having count(*) = (select max(count(*)) from tblAddressBook where hometown = (select hometown from tblAddressBook group by hometown having avg(age) = (select max(avg(age)) from tblAddressBook group by hometown)) group by job);
+
 
 
 -- 6. tblAddressBook. 남자 평균 나이보다 나이가 많은 서울 태생 + 직업을 가지고 있는 사람들을 가져오시오.
+
+-- 6. 결과
 select 
     *
 from tblAddressBook
     where hometown = '서울' and age > (select avg(age) from tblAddressBook where gender = 'm') and job not in('백수', '학생', '취업준비생');
 
 -- 7. tblAddressBook. gmail.com을 사용하는 사람들의 성별 > 세대별(10,20,30,40대) 인원수를 가져오시오.
+
+-- 7.결과
 select 
     decode(gender, 'm', '남자', 'f', '여자') as 성별,
     count(decode(round(age/10), 1, 1)) as "10대",
@@ -70,10 +107,11 @@ from tblAddressBook
     group by gender;
 
 
--- 8. tblAddressBook. 가장 나이가 많으면서 가장 몸무게가 많이 나가는 사람과 같은 직업을 가지는 사람들을 가져오시오.
+-- 8. tblAddressBook. 가장 나이가 많으면서 가장 몸무게가 많이 나가는 사람과 같은 직업을 가지는 사람들을 가져오시오. -- 해결중
 
+select * from tblAddressBook;
 
-
+select * from tblAddressBook order by age desc, weight desc;
 
 -- 9. tblAddressBook.  동명이인이 여러명 있습니다. 이 중 가장 인원수가 많은 동명이인(모든 이도윤)의 명단을 가져오시오.
 
@@ -111,14 +149,18 @@ from tblMember m
     
 -- 14. tblVideo, tblRent, tblMember. '털미네이터' 비디오를 한번이라도 빌려갔던 회원들의 이름은?
 
+
                 
 -- 15. tblStaff, tblProject. 서울시에 사는 직원을 제외한 나머지 직원들의 이름, 월급, 담당프로젝트명을 가져오시오.
 
         
+        
 -- 16. tblCustomer, tblSales. 상품을 2개(단일상품) 이상 구매한 회원의 연락처, 이름, 구매상품명, 수량을 가져오시오.
+
 
                                 
 -- 17. tblVideo, tblRent, tblGenre. 모든 비디오 제목, 보유수량, 대여가격을 가져오시오.
+         
           
                 
 -- 18. tblVideo, tblRent, tblMember, tblGenre. 2007년 2월에 대여된 구매내역을 가져오시오. 회원명, 비디오명, 언제, 대여가격
@@ -183,7 +225,6 @@ from tblMember m
         
 -- 22. employees, jobs. 직무(job_id)별 최고급여(max_salary) 받는 사원 정보를 가져오시오.
 
-      
     
     
 -- 23. departments, locations. 모든 부서와 각 부서가 위치하고 있는 도시의 이름을 가져오시오.
