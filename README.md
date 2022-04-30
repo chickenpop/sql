@@ -11,19 +11,19 @@ SQL Developer practice space
 
 ### 모든 문제는 이전 내용이 포함되어 있습니다
 
-### [select, where](https://github.com/chickenpop/sql/blob/main/question/q01_select_where.sql)
+### q01. [select, where](https://github.com/chickenpop/sql/blob/main/question/q01_select_where.sql)
 
-### [distinct](https://github.com/chickenpop/sql/blob/main/question/q02_select_distinct.sql)
+### q02. [distinct](https://github.com/chickenpop/sql/blob/main/question/q02_select_distinct.sql)
 
-### [집계함수](https://github.com/chickenpop/sql/blob/main/question/q03_aggregatioin_function.sql), [집계함수+where](https://github.com/chickenpop/sql/blob/main/question/q04_where_aggregatioin.sql)
+### q03~4. [집계함수](https://github.com/chickenpop/sql/blob/main/question/q03_aggregatioin_function.sql), [집계함수+where](https://github.com/chickenpop/sql/blob/main/question/q04_where_aggregatioin.sql)
 
-### [order by, decode](https://github.com/chickenpop/sql/blob/main/question/q05_orderby_decode.sql)
+### q05. [order by, decode](https://github.com/chickenpop/sql/blob/main/question/q05_orderby_decode.sql)
 
-### [group by](https://github.com/chickenpop/sql/blob/main/question/q06_groupby.sql)
+### q06. [group by](https://github.com/chickenpop/sql/blob/main/question/q06_groupby.sql)
 
-### [subquery, join](https://github.com/chickenpop/sql/blob/main/question/q06_groupby.sql)
+### q07. [subquery, join](https://github.com/chickenpop/sql/blob/main/question/q06_groupby.sql)
 
-### [rownum](https://github.com/chickenpop/sql/blob/main/question/q06_groupby.sql)
+### q08. [rownum](https://github.com/chickenpop/sql/blob/main/question/q06_groupby.sql)
 
 # 문제점
 
