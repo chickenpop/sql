@@ -1,4 +1,6 @@
--- 11/36 22.04.30 4~5번 문제
+-- 22.04.30 4~5번 문제
+-- 22.05.01 8~11, 13~14문제
+
 -- 1. employees. 'Munich' 도시에 위치한 부서에 소속된 직원들 명단?
 -- 1. 결과
 select 
@@ -123,24 +125,59 @@ select * from tblAddressBook
     where job = (select job from tblAddressBook where weight = (select max(weight) from tblAddressBook where age = (select max(age) from tblAddressBook)) and age = (select max(age) from tblAddressBook));
 
 -- 9. tblAddressBook.  동명이인이 여러명 있습니다. 이 중 가장 인원수가 많은 동명이인(모든 이도윤)의 명단을 가져오시오.
+select name, count(*) from tblAddressBook group by name having count(name) > 1;
+        
+select max(count(*)) from tblAddressBook group by name having count(name) > 1;
 
-
+-- 9. 결과
+select * from tblAddressBook 
+    where name = (select name from tblAddressBook group by name having count(*) = (select max(count(*)) from tblAddressBook group by name having count(name) > 1));
 
 -- 10. tblAddressBook. 가장 사람이 많은 직업의(332명) 세대별 비율을 구하시오.
 --    [10대]       [20대]       [30대]       [40대]
 --    8.7%        30.7%        28.3%        32.2%
+select max(count(*)) from tblAddressBook group by job;
 
+select job from tblAddressBook group by job having count(*) = (select max(count(*)) from tblAddressBook group by job);
 
+-- 10. 결과
+select
+    round(count(case
+        when age >= 10 and age <= 19 then 1
+    end)/count(*)*100, 1) || '%' as "[10대]",
+    round(count(case
+        when age >= 20 and age <= 29 then 1
+    end)/count(*)*100, 1) || '%' as "[20대]",
+    round(count(case
+        when age >= 30 and age <= 39 then 1
+    end)/count(*)*100, 1) || '%' as "[30대]",
+    round(count(case
+        when age >= 40 and age <= 49 then 1
+    end)/count(*)*100, 1) || '%' as "[40대]"
+from tblAddressBook
+    where job = (select job from tblAddressBook group by job having count(*) = (select max(count(*)) from tblAddressBook group by job));
 
 -- 11. tblStaff, tblProject. 현재 재직중인 모든 직원의 이름, 주소, 월급, 담당프로젝트명을 가져오시오.
 
-       
+select * from tblStaff;     -- 부모, seq
+select * from tblProject;   -- 자식, staff_seq
+
+-- 11. 결과
+select 
+    s.name,
+    s.address,
+    s.salary,
+    p.project
+from tblStaff s
+    inner join tblProject p
+        on s.seq = p.staff_seq;
        
 -- 12. tblVideo, tblRent, tblMember. '뽀뽀할까요' 라는 비디오를 빌려간 회원의 이름은?
 select * from tblVideo;
 select * from tblRent;
 select * from tblMember;
-    
+
+-- 12. 결과 
 select
     v.name as 비디오명,
     m.name as 회원명
@@ -152,12 +189,31 @@ from tblMember m
                     where v.name = '뽀뽀할까요';
     
     
--- 13. tblStaff, tblProejct. 'TV 광고'을 담당한 직원의 월급은 얼마인가?
+-- 13. tblStaff, tblProejct. 'TV 광고'을 담당한 직원의 월급은 얼마인가? 
 
+-- 13. 결과
+select 
+    s.salary
+from tblStaff s
+    inner join tblProject p
+        on s.seq = p.staff_seq
+            where p.project = 'TV 광고';
     
     
 -- 14. tblVideo, tblRent, tblMember. '털미네이터' 비디오를 한번이라도 빌려갔던 회원들의 이름은?
+select * from tblvideo;
+select * from tblRent;
+select * from tblMember;
 
+-- 14. 결과
+select
+    m.name
+from tblMember m
+    inner join tblRent r
+        on m.seq = r.member
+            inner join tblVideo v
+                on r.video = v.seq
+                    where v.name = '털미네이터';
 
                 
 -- 15. tblStaff, tblProject. 서울시에 사는 직원을 제외한 나머지 직원들의 이름, 월급, 담당프로젝트명을 가져오시오.
