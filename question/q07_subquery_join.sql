@@ -118,6 +118,10 @@ select job from (select * from tblAddressBook order by age desc, weight desc) wh
 -- 8. 결과
 select * from tblAddressBook where job = (select job from (select * from tblAddressBook order by age desc, weight desc) where rownum = 1);
 
+-- 8. 다른 결과
+select * from tblAddressBook 
+    where job = (select job from tblAddressBook where weight = (select max(weight) from tblAddressBook where age = (select max(age) from tblAddressBook)) and age = (select max(age) from tblAddressBook));
+
 -- 9. tblAddressBook.  동명이인이 여러명 있습니다. 이 중 가장 인원수가 많은 동명이인(모든 이도윤)의 명단을 가져오시오.
 
 
