@@ -107,11 +107,16 @@ from tblAddressBook
     group by gender;
 
 
--- 8. tblAddressBook. 가장 나이가 많으면서 가장 몸무게가 많이 나가는 사람과 같은 직업을 가지는 사람들을 가져오시오. -- 해결중
+-- 8. tblAddressBook. 가장 나이가 많으면서 가장 몸무게가 많이 나가는 사람과 같은 직업을 가지는 사람들을 가져오시오. 
 
 select * from tblAddressBook;
 
 select * from tblAddressBook order by age desc, weight desc;
+
+select job from (select * from tblAddressBook order by age desc, weight desc) where rownum = 1;
+
+-- 8. 결과
+select * from tblAddressBook where job = (select job from (select * from tblAddressBook order by age desc, weight desc) where rownum = 1);
 
 -- 9. tblAddressBook.  동명이인이 여러명 있습니다. 이 중 가장 인원수가 많은 동명이인(모든 이도윤)의 명단을 가져오시오.
 
