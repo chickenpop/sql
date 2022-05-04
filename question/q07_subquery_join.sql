@@ -1,5 +1,6 @@
 -- 22.04.30 4~5번 문제
 -- 22.05.01 8~11, 13~14문제
+-- 22.05.04 15~17, 20~
 
 -- 1. employees. 'Munich' 도시에 위치한 부서에 소속된 직원들 명단?
 -- 1. 결과
@@ -217,16 +218,50 @@ from tblMember m
 
                 
 -- 15. tblStaff, tblProject. 서울시에 사는 직원을 제외한 나머지 직원들의 이름, 월급, 담당프로젝트명을 가져오시오.
+select * from tblStaff;
+select * from tblProject;
 
+-- 15. 결과
+select 
+    s.name,
+    s.salary,
+    p.project
+from tblStaff s
+    inner join tblProject p
+        on s.seq = p.staff_seq
+            where address <> '서울시';
+        
         
         
 -- 16. tblCustomer, tblSales. 상품을 2개(단일상품) 이상 구매한 회원의 연락처, 이름, 구매상품명, 수량을 가져오시오.
+select * from tblCustomer; -- seq
+select * from tblSales;    -- cseq
 
+-- 16. 결과
+select 
+    c.tel,
+    c.name,
+    s.item,
+    s.qty
+from tblCustomer c
+    inner join tblSales s
+        on c.seq = s.cseq
+            where s.qty > 1;
 
                                 
 -- 17. tblVideo, tblRent, tblGenre. 모든 비디오 제목, 보유수량, 대여가격을 가져오시오.
-         
-          
+select * from tblVideo;
+select * from tblRent;
+select * from tblGenre;
+     
+-- 17. 결과     
+select 
+    v.name,
+    v.qty,
+    g.price
+from tblVideo v 
+    inner join tblGenre g
+        on v.genre = g.seq;
                 
 -- 18. tblVideo, tblRent, tblMember, tblGenre. 2007년 2월에 대여된 구매내역을 가져오시오. 회원명, 비디오명, 언제, 대여가격
 select * from tblVideo;
@@ -281,15 +316,35 @@ from tblMember m
     
     
 -- 20. employees, departments. 사원들의 이름, 부서번호, 부서명을 가져오시오.
+select * from employees;
+select * from departments;
 
+select 
+    e.first_name || ' ' || e.last_name as 사원명,
+    e.department_id as 부서번호,
+    d.department_name as 부서명
+from employees e
+    inner join departments d
+        on e.department_id = d.department_id;
         
         
 -- 21. employees, jobs. 사원들의 정보와 직업명을 가져오시오.
-
+select 
+    e.*,
+    j.job_title
+from employees e
+    inner join jobs j
+        on e.job_id = j.job_id;
         
         
 -- 22. employees, jobs. 직무(job_id)별 최고급여(max_salary) 받는 사원 정보를 가져오시오.
-
+select 
+    e.job_id,
+    max(e.salary) as 최고급여
+from employees e
+    inner join jobs j
+        on e.job_id = j.job_id
+            group by e.job_id;
     
     
 -- 23. departments, locations. 모든 부서와 각 부서가 위치하고 있는 도시의 이름을 가져오시오.
