@@ -2,6 +2,7 @@
 -- 22.05.01 8~11, 13~14문제
 -- 22.05.04 15~17, 20~23
 -- 22.05.05 24~31
+-- 22.05.06 33~36, docs 18번부터 누락된 결과 표시
 
 -- 1. employees. 'Munich' 도시에 위치한 부서에 소속된 직원들 명단?
 -- 1. 결과
@@ -270,6 +271,7 @@ select * from tblRent;
 select * from tblMember;
 select * from tblGenre;
 
+-- 18. 결과
 select 
     m.name as 회원명,
     v.name as 비디오명,
@@ -304,6 +306,7 @@ from tblTest
 where to_char(언제) like '07/02/%';
         
 -- 19. tblVideo, tblRent, tblMember. 현재 반납을 안한 회원명과 비디오명, 대여날짜를 가져오시오.
+-- 19. 결과
 select
     m.name as 회원명,
     v.name as 비디오명,
@@ -320,6 +323,7 @@ from tblMember m
 select * from employees;
 select * from departments;
 
+-- 20. 결과
 select 
     e.first_name || ' ' || e.last_name as 사원명,
     e.department_id as 부서번호,
@@ -330,6 +334,8 @@ from employees e
         
         
 -- 21. employees, jobs. 사원들의 정보와 직업명을 가져오시오.
+
+-- 21. 결과
 select 
     e.*,
     j.job_title
@@ -339,6 +345,8 @@ from employees e
         
         
 -- 22. employees, jobs. 직무(job_id)별 최고급여(max_salary) 받는 사원 정보를 가져오시오.
+
+-- 22. 결과
 select 
     e.job_id,
     max(e.salary) as 최고급여
@@ -352,6 +360,7 @@ from employees e
 select * from departments;
 select * from locations;
         
+-- 23. 결과
 select 
     d.department_name, 
     l.city
@@ -362,7 +371,8 @@ from departments d
 -- 24. locations, countries. location_id 가 2900인 도시가 속한 국가 이름을 가져오시오.
 select * from locations;
 select * from countries;
-            
+     
+-- 24. 결과       
 select 
     c.country_name as 국가명 
 from locations l
@@ -377,7 +387,8 @@ from employees e
     inner join departments d
         on e.department_id = d.department_id
             where e.salary >= 12000;
-     
+  
+-- 25. 결과   
 select
     first_name || ' ' || last_name as name, 
     salary,
@@ -389,6 +400,8 @@ from employees
                                                                             where e.salary >= 12000);
      
 -- 26. employees, departments. locations.  'Seattle'에서(LOC) 근무하는 사원의 이름, 직위, 부서번호, 부서이름을 가져오시오.
+
+-- 26. 결과
 select 
     e.first_name || ' ' || e.last_name as 이름, 
     e.job_id as 직위,
@@ -408,6 +421,7 @@ select
 from employees 
     where lower(first_name) like 'jonathon';
     
+-- 27. 결과   
 select 
     *
 from employees
@@ -418,6 +432,8 @@ from employees
 
     
 -- 28. employees, departments. 사원이름과 그 사원이 속한 부서의 부서명, 그리고 월급을 출력하는데 월급이 3000이상인 사원을 가져오시오.
+
+-- 28. 결과
 select 
     e.first_name || ' ' || e.last_name as 이름,
     d.department_name as 부서명,
@@ -429,6 +445,8 @@ from employees e
             
             
 -- 29. employees, departments. 부서번호가 10번인 사원들의 부서번호, 부서이름, 사원이름, 월급을 가져오시오.
+
+-- 29. 결과
 select 
     d.department_id,
     d.department_name,
@@ -443,6 +461,7 @@ from employees e
 select * from departments;
 select * from job_history;
         
+-- 30. 결과
 select 
     j.start_date,
     j.end_date,
@@ -452,6 +471,8 @@ from job_history j
         on j.department_id = d.department_id;
         
 -- 31. employees. 사원번호와 사원이름, 그리고 그 사원을 관리하는 관리자의 사원번호와 사원이름을 출력하되 각각의 컬럼명을 '사원번호', '사원이름', '관리자번호', '관리자이름'으로 하여 가져오시오.
+
+-- 31. 결과
 select 
     e.employee_id as 사원번호,
     e.first_name || ' ' || e.last_name as 사원이름,
@@ -473,6 +494,7 @@ from employees e
         on e.job_id = j.job_id
         where j.job_title = 'Sales Manager';
 
+-- 32. 결과
 select 
     substr(e.hire_date, 1, 2) as 입사년도,
     round(avg(e.salary)) as "입사년도 평균급여"
@@ -486,30 +508,67 @@ from employees e
 
 
 -- 33. employees, departments. locations. 각 도시(city)에 있는 모든 부서 사원들의 평균급여가 가장 낮은 도시부터 도시명(city)과 평균연봉, 해당 도시의 사원수를 가져오시오. 단, 도시에 근 무하는 사원이 10명 이상인 곳은 제외하고 가져오시오.
--- 미해결
 select * from employees;
 select * from departments;
 select * from locations;
 
+-- 33. 결과
 select 
-    *
-from employees e
-    inner join departments d
-        on e.department_id = d.department_id
-            inner join locations l
-                on d.location_id = l.location_id;
-            
-            
+    l.city, round(avg(e.salary)) as avgSalary, count(*) as employeeCnt 
+from employees e inner join departments d on e.department_id = d.department_id inner join locations l on d.location_id = l.location_id 
+    group by l.city 
+        having count(*) < 10 
+            order by avg(e.salary);
+       
+          
 -- 34. employees, jobs, job_history. ‘Public  Accountant’의 직책(job_title)으로 과거에 근무한 적이 있는 모든 사원의 사번과 이름을 가져오시오. 현재 ‘Public Accountant’의 직책(job_title)으로 근무하는 사원은 고려 하지 말것.
-
+select * from employees;
+select * from jobs;
+select * from job_history;
     
+select jh.employee_id from jobs js inner join job_history jh on js.job_id = jh.job_id where js.job_title = 'Public Accountant';
+  
+-- 34. 결과  
+select 
+    employee_id,
+    first_name || ' ' || last_name as name
+from employees
+    where employee_id in (select jh.employee_id from jobs js inner join job_history jh on js.job_id = jh.job_id where js.job_title = 'Public Accountant');
     
 -- 35. employees, departments, locations. 커미션을 받는 모든 사람들의 first_name, last_name, 부서명, 지역 id, 도시명을 가져오시오.
+select * from employees;
+select * from departments;
+select * from locations;
 
-    
+-- 35. 결과    
+select 
+    e.first_name,
+    e.last_name,
+    d.department_name,
+    l.location_id,
+    l.city
+from employees e inner join departments d on e.department_id = d.department_id inner join locations l on d.location_id = l.location_id 
+    where e.commission_pct > 0;
     
 -- 36. employees. 자신의 매니저보다 먼저 고용된 사원들의 first_name, last_name, 고용일을 가져오시오.
 
+-- 36. 결과 ef 매니저, el 사원
+select 
+    el.first_name,
+    el.last_name,
+    el.hire_date 
+from employees ef
+    inner join employees el
+        on ef.employee_id = el.manager_id
+            where ef.hire_date > el.hire_date;
 
-
+-- 36. 결과 ef 사원 el 매니저
+select 
+    ef.first_name,
+    ef.last_name,
+    ef.hire_date 
+from employees ef
+    inner join employees el
+        on ef.manager_id = el.employee_id
+            where ef.hire_date < el.hire_date;
 
