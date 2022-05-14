@@ -27,6 +27,10 @@ create sequence seqCons;
 
 select * from tblConstraint;
 
+
+-- DML (insert(추가), update(수정), delecte(삭제))
+
+-- insert
 insert into tblConstraint (seq, name, nickname, memo) values (seqCons.nextVal, '홍길동', 'hijava', 'hi~');
 -- ORA-00001: unique constraint (HR.TBLCONSTRAINT_NICKNAME_UQ) violated
 -- 의도적 삽입 > 유니크 특성 : 중복값 불가, null가능 
@@ -39,4 +43,15 @@ insert into tblConstraint (seq, name, nickname, memo) values (seqCons.nextVal, '
 -- ORA-00001: unique constraint (HR.TBLCONSTRAINT_SEQ_PK) violated
 insert into tblConstraint (seq, name, nickname, memo) values (1, '홍길동', 'hijava', 'hi~');
 insert into tblConstraint (seq, name, nickname, memo) values (1, '홍길동', 'hong', 'hi~');
+
+
+-- update
+update tblConstraint set nickname = '안녕자바' where seq = 1;
+-- ORA-00001: unique constraint (HR.TBLCONSTRAINT_NICKNAME_UQ) violated
+update tblConstraint set nickname = '안녕자바' where seq = 2;
+update tblConstraint set nickname = 'hijava' where seq = 2;
+
+select * from tblConstraint;
+
+
 
