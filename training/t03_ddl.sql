@@ -23,7 +23,7 @@ create table tblConstraint(
 alter table tblConstraint
     add constraint tblConstraint_seq_pk primary key(seq);
 
-create sequence seqCons;
+create sequence seqConstraint;
 
 select * from tblConstraint;
 
@@ -31,18 +31,23 @@ select * from tblConstraint;
 -- DML (insert(추가), update(수정), delecte(삭제))
 
 -- insert
-insert into tblConstraint (seq, name, nickname, memo) values (seqCons.nextVal, '홍길동', 'hijava', 'hi~');
+insert into tblConstraint (seq, name, nickname, memo) values (seqConstraint.nextVal, '홍길동', 'hijava', 'hi~');
 -- ORA-00001: unique constraint (HR.TBLCONSTRAINT_NICKNAME_UQ) violated
 -- 의도적 삽입 > 유니크 특성 : 중복값 불가, null가능 
-insert into tblConstraint (seq, name, nickname, memo) values (seqCons.nextVal, '아무개', 'hijava', 'hi~');
+insert into tblConstraint (seq, name, nickname, memo) values (seqConstraint.nextVal, '아무개', 'hijava', 'hi~');
 insert into tblConstraint (seq, name, memo) values (seqCons.nextVal, '홍길동', 'hi~');
-insert into tblConstraint (seq, name, nickname, memo) values (seqCons.nextVal, '홍길동', 'hong', 'hi~');
+insert into tblConstraint (seq, name, nickname, memo) values (seqConstraint.nextVal, '홍길동', 'hong', 'hi~');
 
 
 -- alter 제약사항 확인
 -- ORA-00001: unique constraint (HR.TBLCONSTRAINT_SEQ_PK) violated
 insert into tblConstraint (seq, name, nickname, memo) values (1, '홍길동', 'hijava', 'hi~');
 insert into tblConstraint (seq, name, nickname, memo) values (1, '홍길동', 'hong', 'hi~');
+
+-- insert
+insert into tblConstraint (seq, name, nickname, memo) values (seqConstraint.nextVal, '박우창', 'park12', '책읽기');
+insert into tblConstraint (seq, name, nickname, memo) values (seqConstraint.nextVal, '남송희', 'nam0515', '김치만들기');
+insert into tblConstraint (seq, name, nickname, memo) values (seqConstraint.nextVal, '이현룡', 'leelee', '문서 제출하기');
 
 
 -- update
@@ -52,6 +57,14 @@ update tblConstraint set nickname = '안녕자바' where seq = 2;
 update tblConstraint set nickname = 'hijava' where seq = 2;
 
 select * from tblConstraint;
+
+-- delete 
+
+-- 5번 아무개 삭제
+delete tblConstraint where seq = 5;
+select * from tblConstraint;
+
+
 
 
 
