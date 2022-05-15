@@ -1,4 +1,7 @@
 -- 프로시저 연습
+-- 주의)시퀀스 서버를 다시 접속하면 캐시값부터 시작됨
+-- ex) 1,2...10까지 사용하다가 컴퓨터 종료 후 다시 열면 20부터 시작
+
 
 -- 1. 추가 작업 연습
 
@@ -39,6 +42,7 @@ end;
 
 begin
     procT1('홍길동', '010-4321-9876');
+    procT1('고재성', '010-4567-4655');
 end;
 
 select * from tblPerson;
@@ -134,5 +138,45 @@ begin
     dbms_output.put_line(vresult);
 
 end;
+
+-- 3. 삭제 작업
+create or replace procedure procDelPerson(
+    pseq in number,
+    presult out number
+)
+is
+    pname tblPerson.name%type;
+begin
+
+    select name into pname from tblPerson where seq = pseq;
+    dbms_output.put_line(pname);
+    delete tblPerson where seq = pseq;
+    presult := 1;
+    commit;
+exception
+
+    when others then
+        presult := 0;
+        rollback;
+
+end;
+
+
+set serverout on;
+
+declare
+    vresult number;
+begin
+
+    procDelPerson(21, vresult);
+    dbms_output.put_line('삭제 성공(1), 실패(0) :' || vresult);
+
+end;
+
+-- 테이블 확인
+select * from tblPerson;
+
+
+
 
 
