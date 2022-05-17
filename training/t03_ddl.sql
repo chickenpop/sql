@@ -64,6 +64,50 @@ select * from tblConstraint;
 delete tblConstraint where seq = 5;
 select * from tblConstraint;
 
+-- ck 제약사항 확인
+
+drop table tblConstraint;
+
+create table tblConstraint(
+    seq number primary key, 
+    num1 number,
+    num2 number,
+    num3 number,
+    
+    constraint tblConstraint_ck check(num1 + num2 + num3 = 100)
+);
+
+-- ORA-02290: check constraint (HR.TBLCONSTRAINT_CK) violated > check 에러 확인
+insert into tblconstraint(seq, num1, num2, num3) values(1, 10, 20, 30);
+
+-- 정상 삽입 > 가능
+insert into tblconstraint(seq, num1, num2, num3) values(1, 30, 30, 40);
+
+-- 일부값만 주기 > null 허용인 경우 > 가능
+insert into tblconstraint(seq, num1, num2) values(2, 50, 50);
+
+-- not null인 경우 확인
+
+create table tblConstraint(
+    seq number primary key, 
+    num1 number,
+    num2 number,
+    num3 number not null,
+    
+    constraint tblConstraint_ck check(num1 + num2 + num3 = 100)
+);
+
+-- ORA-01400: cannot insert NULL into ("HR"."TBLCONSTRAINT"."NUM3") > 당연히 불가능
+insert into tblconstraint(seq, num1, num2) values(1, 50, 50);
+
+-- null 값 중 일부만 생략해서 check 조건으로 insert 가능
+-- num1 + num2 + num3 = 100인 경우
+-- num3이 not null이면 (num1, num2) 택일 혹은 둘다 + num3 값을 넣어줄수 있음
+insert into tblconstraint(seq, num2, num3) values(1, 50, 50);
+
+
+
+
 
 
 
