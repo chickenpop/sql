@@ -25,6 +25,17 @@ SQL Developer practice space
 
 #### q08. [rownum](https://github.com/chickenpop/sql/blob/main/question/q06_groupby.sql) 컬럼의 순서 만들기
 
+# [training](https://github.com/chickenpop/sql/tree/main/training) sql 개인 연습 혹은 테스트 장소
+
+#### t01 프로시저 연습
+
+#### t02 select문 연습
+
+#### t03 ddl 연습 및 테스트
+
+#### t04 프로젝트용 계정 생성 테스트
+
+#### t05 날짜 검색 테스트
 
 # 오류
 
