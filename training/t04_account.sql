@@ -8,3 +8,5 @@ grant connect, resource to projectAcc; -- 권한 부여 connect, resource 이미
 
 -- 생성 후 접속 > name, 사용자 이름, 비밀번호, 비밀번호 저장 
 -- 테스트 > 성공뜨면 저장하고 사용
+
+grant connect, resource, dba to projectAcc;
