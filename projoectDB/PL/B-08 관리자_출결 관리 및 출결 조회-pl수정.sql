@@ -1,5 +1,6 @@
--- B-08 관리자_출결 관리 및 출결 조회-pl수정
+-- B-08 관리자_출결 관리 및 출결 조회-pl
 
+set serveroutput on;
 
 -- 강의 상태 조회 
 create or replace procedure procViewCourseState (
@@ -43,7 +44,6 @@ end procViewCourseState;
 
 
 ---
-set serveroutput on;
 
 -- 강의 상태 조회
 declare
@@ -79,8 +79,8 @@ is
     (select count(*) from tblattendance where attendance_type = '정상' and sugang_seq = s.sugang_seq) as 정상,
     (select count(*) from tblattendance where attendance_type = '지각' and sugang_seq = s.sugang_seq) as 지각,
     (select count(*) from tblattendance where attendance_type = '조퇴' and sugang_seq = s.sugang_seq) as 조퇴,
-    (select count(*) from tblattendance where attendance_type = '외출' and sugang_seq = s.sugang_seq) as 외출,
     (select count(*) from tblattendance where attendance_type = '병가' and sugang_seq = s.sugang_seq) as 병가,
+    (select count(*) from tblattendance where attendance_type = '결석' and sugang_seq = s.sugang_seq) as 결석,
     (select count(*) from tblattendance where attendance_type = '기타' and sugang_seq = s.sugang_seq) as 기타
 from tblcourse c
     inner join tblcoursename cn
@@ -96,12 +96,15 @@ from tblcourse c
 begin
 	open vcursor;
 	dbms_output.put_line('==================================================================================================');
-    dbms_output.put_line('교육생 번호 | 교육생 이름  |  정상  | 지각 | 조퇴 | 외출 | 병가 | 기타');
+    dbms_output.put_line(rpad('교육생 번호', 12, ' ') || '|' || rpad('교육생 이름', 12, ' ')  ||  '|' ||
+                         rpad('정상', 4, ' ')  || '|' || rpad('지각', 4, ' ') || '|' || rpad('조퇴', 4, ' ') || '|' ||
+                         rpad('병가', 4, ' ')  || '|' || rpad('결석', 4, ' ') || '|' || rpad('기타', 4, ' '));
 	loop
 		fetch vcursor into p_sugang_seq, p_m_name, p_attend_a, p_attend_b, p_attend_c, p_attend_d, p_attend_e, p_attend_f;
 		exit when vcursor%notfound;
-        dbms_output.put_line('    ' || p_sugang_seq || '     |      ' || p_m_name || '  | ' || p_attend_a || '     |  ' || p_attend_b  || '   | ' || p_attend_c 
-        || '    | ' || p_attend_d || '    | ' || p_attend_e || '    | ' || p_attend_f);
+        dbms_output.put_line(rpad(p_sugang_seq, 12, ' ') || '|' || rpad(p_m_name, 12, ' ')  ||  '|' ||
+                         lpad(p_attend_a, 4, ' ')  || '|' || lpad(p_attend_b, 4, ' ') || '|' || lpad(p_attend_c, 4, ' ') || '|' || lpad(p_attend_d, 4, ' ') || '|' || 
+                         lpad(p_attend_e, 4, ' ')  || '|' || lpad(p_attend_f, 4, ' '));
 	end loop;
 close vcursor;
 	presult := 1;
@@ -147,8 +150,8 @@ is
     (select count(*) from tblattendance where attendance_type = '정상' and sugang_seq = s.sugang_seq and a.attend_date like (pyear || '/%')) as 정상,
     (select count(*) from tblattendance where attendance_type = '지각' and sugang_seq = s.sugang_seq and a.attend_date like (pyear || '/%')) as 지각,
     (select count(*) from tblattendance where attendance_type = '조퇴' and sugang_seq = s.sugang_seq and a.attend_date like (pyear || '/%')) as 조퇴,
-    (select count(*) from tblattendance where attendance_type = '외출' and sugang_seq = s.sugang_seq and a.attend_date like (pyear || '/%')) as 외출,
     (select count(*) from tblattendance where attendance_type = '병가' and sugang_seq = s.sugang_seq and a.attend_date like (pyear || '/%')) as 병가,
+    (select count(*) from tblattendance where attendance_type = '결석' and sugang_seq = s.sugang_seq and a.attend_date like (pyear || '/%')) as 결석,
     (select count(*) from tblattendance where attendance_type = '기타' and sugang_seq = s.sugang_seq and a.attend_date like (pyear || '/%')) as 기타
 from tblcourse c
     inner join tblcoursename cn
@@ -164,12 +167,15 @@ from tblcourse c
 begin
 	open vcursor;
 	dbms_output.put_line('==================================================================================================');
-    dbms_output.put_line('교육생 번호 | 교육생 이름  |  정상  | 지각 | 조퇴 | 외출 | 병가 | 기타');
+    dbms_output.put_line(rpad('교육생 번호', 12, ' ') || '|' || rpad('교육생 이름', 12, ' ')  ||  '|' ||
+                         rpad('정상', 4, ' ')  || '|' || rpad('지각', 4, ' ') || '|' || rpad('조퇴', 4, ' ') || '|' || 
+                         rpad('병가', 4, ' ')  || '|' || rpad('결석', 4, ' ') || '|' || rpad('기타', 4, ' '));
 	loop
 		fetch vcursor into p_sugang_seq, p_m_name, p_attend_a, p_attend_b, p_attend_c, p_attend_d, p_attend_e, p_attend_f;
 		exit when vcursor%notfound;
-        dbms_output.put_line('    ' || p_sugang_seq || '     |      ' || p_m_name || '  | ' || p_attend_a || '     |  ' || p_attend_b  || '   | ' || p_attend_c 
-        || '    | ' || p_attend_d || '    | ' || p_attend_e || '    | ' || p_attend_f);
+        dbms_output.put_line(rpad(p_sugang_seq, 12, ' ') || '|' || rpad(p_m_name, 12, ' ')  ||  '|' ||
+                         lpad(p_attend_a, 4, ' ')  || '|' || lpad(p_attend_b, 4, ' ') || '|' || lpad(p_attend_c, 4, ' ') || '|' || lpad(p_attend_d, 4, ' ') || '|' || 
+                         lpad(p_attend_e, 4, ' ')  || '|' || lpad(p_attend_f, 4, ' '));
 	end loop;
 close vcursor;
 	presult := 1;
@@ -213,8 +219,8 @@ is
     (select count(*) from tblattendance where attendance_type = '정상' and sugang_seq = s.sugang_seq and attend_date like (pYearMonth || '%')) as 정상,
     (select count(*) from tblattendance where attendance_type = '지각' and sugang_seq = s.sugang_seq and attend_date like (pYearMonth || '%')) as 지각,
     (select count(*) from tblattendance where attendance_type = '조퇴' and sugang_seq = s.sugang_seq and attend_date like (pYearMonth || '%')) as 조퇴,
-    (select count(*) from tblattendance where attendance_type = '외출' and sugang_seq = s.sugang_seq and attend_date like (pYearMonth || '%')) as 외출,
     (select count(*) from tblattendance where attendance_type = '병가' and sugang_seq = s.sugang_seq and attend_date like (pYearMonth || '%')) as 병가,
+    (select count(*) from tblattendance where attendance_type = '결석' and sugang_seq = s.sugang_seq and attend_date like (pYearMonth || '%')) as 결석,
     (select count(*) from tblattendance where attendance_type = '기타' and sugang_seq = s.sugang_seq and attend_date like (pYearMonth || '%')) as 기타
 from tblcourse c
     inner join tblcoursename cn
@@ -230,12 +236,15 @@ from tblcourse c
 begin
 	open vcursor;
 	dbms_output.put_line('==================================================================================================');
-    dbms_output.put_line('교육생 번호 | 교육생 이름  |  정상  | 지각 | 조퇴 | 외출 | 병가 | 기타');
+    dbms_output.put_line(rpad('교육생 번호', 12, ' ') || '|' || rpad('교육생 이름', 12, ' ')  ||  '|' ||
+                         rpad('정상', 4, ' ')  || '|' || rpad('지각', 4, ' ') || '|' || rpad('조퇴', 4, ' ') || '|' ||
+                         rpad('병가', 4, ' ')  || '|' || rpad('결석', 4, ' ') || '|' || rpad('기타', 4, ' '));
 	loop
 		fetch vcursor into p_sugang_seq, p_m_name, p_attend_a, p_attend_b, p_attend_c, p_attend_d, p_attend_e, p_attend_f;
 		exit when vcursor%notfound;
-        dbms_output.put_line('    ' || p_sugang_seq || '     |      ' || p_m_name || '  | ' || p_attend_a || '     |  ' || p_attend_b  || '   | ' || p_attend_c 
-        || '    | ' || p_attend_d || '    | ' || p_attend_e || '    | ' || p_attend_f);
+        dbms_output.put_line(rpad(p_sugang_seq, 12, ' ') || '|' || rpad(p_m_name, 12, ' ')  ||  '|' ||
+                         lpad(p_attend_a, 4, ' ')  || '|' || lpad(p_attend_b, 4, ' ') || '|' || lpad(p_attend_c, 4, ' ') || '|' || lpad(p_attend_d, 4, ' ') || '|' || 
+                         lpad(p_attend_e, 4, ' ')  || '|' || lpad(p_attend_f, 4, ' '));
 	end loop;
 close vcursor;
 	presult := 1;
@@ -285,11 +294,11 @@ from tblSugang su
 begin
    open vcursor;
    dbms_output.put_line('==================================================================================================');
-    dbms_output.put_line('교육생 번호 | 교육생 이름  |    출석일    | 상태');
+    dbms_output.put_line(rpad('교육생 번호', 12, ' ') || '|' || rpad('교육생 이름', 12, ' ')  ||  '|' || rpad('출석일', 10, ' ')  || '|' || rpad('상태', 4, ' '));
    loop
       fetch vcursor into p_sugang_seq, p_m_name, p_attend_date, p_attendance_type;
       exit when vcursor%notfound;
-        dbms_output.put_line('    ' || p_sugang_seq || ' |      ' || p_m_name || '  | ' || p_attend_date || '    | ' || p_attendance_type);
+        dbms_output.put_line(rpad(p_sugang_seq, 12, ' ') || '|' || rpad(p_m_name, 12, ' ')  ||  '|' || rpad(p_attend_date, 10, ' ')  || '|' || rpad(p_attendance_type, 4, ' '));
    end loop;
 close vcursor;
    presult := 1;
@@ -337,11 +346,11 @@ is
 begin
 	open vcursor;
 	dbms_output.put_line('=========================================================================================================');
-    dbms_output.put_line(rpad('교육생 이름', 12, ' ') || ' | ' || rpad('출석일', 10, ' ') || ' | ' || rpad('상태', 5, ' '));
+    dbms_output.put_line(rpad('교육생 이름', 12, ' ') || ' | ' || rpad('출석일', 10, ' ') || ' | ' || rpad('상태', 4, ' '));
 	loop
 		fetch vcursor into p_m_name, p_attend_date, p_attendance_type;
 		exit when vcursor%notfound;
-        dbms_output.put_line(rpad(p_m_name, 12, ' ') || ' | ' || rpad(p_attend_date, 10, ' ') || ' | ' || rpad(p_attendance_type, 5, ' '));
+        dbms_output.put_line(rpad(p_m_name, 12, ' ') || ' | ' || rpad(p_attend_date, 10, ' ') || ' | ' || rpad(p_attendance_type, 4, ' '));
 	end loop;
 close vcursor;
 	presult := 1;
@@ -356,7 +365,7 @@ end procCourseStuAttend;
 declare
     vresult number;
 begin
-    procCourseStuAttend(187, vresult);
+    procCourseStuAttend(182, vresult);
     if vresult = 1 then
         dbms_output.put_line('조회 종료');
     else
