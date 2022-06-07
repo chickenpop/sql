@@ -1,4 +1,4 @@
--- B-08
+-- B-08 관리자_출결 관리 및 출결 조회
 
 -- 강의 상태 조회 
 select 
@@ -22,8 +22,8 @@ select
     (select count(*) from tblattendance where attendance_type = '정상' and sugang_seq = s.sugang_seq) as 정상,
     (select count(*) from tblattendance where attendance_type = '지각' and sugang_seq = s.sugang_seq) as 지각,
     (select count(*) from tblattendance where attendance_type = '조퇴' and sugang_seq = s.sugang_seq) as 조퇴,
-    (select count(*) from tblattendance where attendance_type = '외출' and sugang_seq = s.sugang_seq) as 외출,
     (select count(*) from tblattendance where attendance_type = '병가' and sugang_seq = s.sugang_seq) as 병가,
+    (select count(*) from tblattendance where attendance_type = '결석' and sugang_seq = s.sugang_seq) as 결석,
     (select count(*) from tblattendance where attendance_type = '기타' and sugang_seq = s.sugang_seq) as 기타
 from tblcourse c
     inner join tblcoursename cn
@@ -45,8 +45,8 @@ select
     (select count(*) from tblattendance where attendance_type = '정상' and sugang_seq = s.sugang_seq and a.attend_date like '22/%') as 정상,
     (select count(*) from tblattendance where attendance_type = '지각' and sugang_seq = s.sugang_seq and a.attend_date like '22/%') as 지각,
     (select count(*) from tblattendance where attendance_type = '조퇴' and sugang_seq = s.sugang_seq and a.attend_date like '22/%') as 조퇴,
-    (select count(*) from tblattendance where attendance_type = '외출' and sugang_seq = s.sugang_seq and a.attend_date like '22/%') as 외출,
     (select count(*) from tblattendance where attendance_type = '병가' and sugang_seq = s.sugang_seq and a.attend_date like '22/%') as 병가,
+    (select count(*) from tblattendance where attendance_type = '결석' and sugang_seq = s.sugang_seq and a.attend_date like '22/%') as 결석,
     (select count(*) from tblattendance where attendance_type = '기타' and sugang_seq = s.sugang_seq and a.attend_date like '22/%') as 기타
 from tblcourse c
     inner join tblcoursename cn
@@ -68,8 +68,8 @@ select
     (select count(*) from tblattendance where attendance_type = '정상' and sugang_seq = s.sugang_seq and attend_date like '22/04%') as 정상,
     (select count(*) from tblattendance where attendance_type = '지각' and sugang_seq = s.sugang_seq and attend_date like '22/04%') as 지각,
     (select count(*) from tblattendance where attendance_type = '조퇴' and sugang_seq = s.sugang_seq and attend_date like '22/04%') as 조퇴,
-    (select count(*) from tblattendance where attendance_type = '외출' and sugang_seq = s.sugang_seq and attend_date like '22/04%') as 외출,
     (select count(*) from tblattendance where attendance_type = '병가' and sugang_seq = s.sugang_seq and attend_date like '22/04%') as 병가,
+    (select count(*) from tblattendance where attendance_type = '결석' and sugang_seq = s.sugang_seq and attend_date like '22/04%') as 결석,
     (select count(*) from tblattendance where attendance_type = '기타' and sugang_seq = s.sugang_seq and attend_date like '22/04%') as 기타
 from tblcourse c
     inner join tblcoursename cn
@@ -111,7 +111,7 @@ from tblcourse c
                 on s.member_seq = m.member_seq
                     inner join tblattendance a
                         on s.sugang_seq = a.sugang_seq
-                            where a.sugang_seq = 197;
+                            where a.sugang_seq = 182;
          
                                     
                         
