@@ -1,0 +1,9 @@
+-- 조건문에서 해결법을 찾지 못해 SQL 벤다이어그램 예시를 참고해서 풀었음
+-- ANIMAL_OUTS 테이블을 기준으로 ANIMAL_INS와 연결하여 ANIMAL_INS의 ANIMAL_ID값이 NULL인것을 찾음
+SELECT
+       O.ANIMAL_ID, 
+       O.NAME
+  FROM ANIMAL_OUTS O
+  LEFT JOIN ANIMAL_INS I
+    ON O.ANIMAL_ID = I.ANIMAL_ID
+ WHERE I.ANIMAL_ID IS NULL;
