@@ -10,8 +10,8 @@
 ## 프로그래머스
 > SQL Level 중에서 정리할 내용이 있는 문제를 저장하는 장소입니다.
 
-- SQL Level 1 완료
-- SQL Level 2 진행 중
+- SQL Level 1 완료 
+- SQL Level 2 완료
 - SQL Level 3 진행 중
 
 ## Question
