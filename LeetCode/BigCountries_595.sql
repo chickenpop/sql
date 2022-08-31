@@ -1,8 +1,10 @@
 
 -- 595. Big Countries
-select 
+-- 인구수 또는 지역 크기 범위 설정
+SELECT 
        name
      , population
      , area
-  from world
- where 3000000 <= area or 25000000 <= population;
+  FROM world
+ WHERE area >= 3000000 
+    OR population >= 25000000;
