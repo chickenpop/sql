@@ -14,6 +14,14 @@
 - SQL Level 2 완료
 - SQL Level 3 진행 중
 
+## LeetCode
+
+- https://leetcode.com/
+
+## HackerRank
+
+- https://www.hackerrank.com/dashboard
+
 ## Question
 
 > SQL 문제 풀이 장소입니다.
