@@ -1,0 +1,32 @@
+
+-- 틀린 풀이 1
+-- Unknown column 'DATETIME' in 'having clause'\
+-- HAVING절에서는 컬럼명을 넣어야 합니다
+SELECT
+       HOUR(DATETIME) AS HOUR
+     , COUNT(DATETIME)
+  FROM ANIMAL_OUTS
+ GROUP BY HOUR(DATETIME)
+ HAVING HOUR(DATETIME) < 24
+ ORDER BY HOUR(DATETIME);
+
+-- 틀린 풀이 2
+-- HAVING절은 해결했지만 0~23시 사이에 존재하지 않는 시간대의 정보가 출력되지 않습니다
+ SELECT
+       HOUR(DATETIME) AS HOUR
+     , COUNT(DATETIME) AS COUNT
+  FROM ANIMAL_OUTS
+ GROUP BY HOUR
+ HAVING 0 <= HOUR <= 23
+ ORDER BY HOUR(DATETIME);
+
+-- 정답
+-- 빈 데이터에 공간을 채워주기 위해 SET으로 @HOUR을 선언해서 0~23이 데이터가 없는 경우
+-- COUNT가 0이 나오게 출력한다
+SET @HOUR = -1;
+SELECT
+       (@HOUR := @HOUR+1) AS HOUR
+     , (SELECT COUNT(HOUR(DATETIME)) FROM ANIMAL_OUTS WHERE HOUR(DATETIME)=@HOUR) AS COUNT
+  FROM ANIMAL_OUTS
+ WHERE @HOUR < 23
+ ORDER BY @HOUR; 
