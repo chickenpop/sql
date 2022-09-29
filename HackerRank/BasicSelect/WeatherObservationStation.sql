@@ -58,3 +58,57 @@ UNION ALL
  WHERE LENGTH(CITY) = (SELECT MAX(LENGTH(CITY)) FROM STATION)
  ORDER BY CITY
  LIMIT 1)
+
+
+-- Weather Observation Station 6
+SELECT 
+       DISTINCT CITY
+  FROM STATION
+ WHERE CITY LIKE 'A%' OR
+       CITY LIKE 'E%' OR
+       CITY LIKE 'I%' OR
+       CITY LIKE 'O%' OR
+       CITY LIKE 'U%';
+
+-- Weather Observation Station 7-8
+SELECT 
+       DISTINCT CITY
+  FROM STATION
+ WHERE CITY LIKE '%A' OR
+       CITY LIKE '%E' OR
+       CITY LIKE '%I' OR
+       CITY LIKE '%O' OR
+       CITY LIKE '%U';
+
+-- 다른 풀이법
+SELECT 
+       DISTINCT CITY
+  FROM STATION
+ WHERE RIGHT(CITY, 1) IN  ('a', 'e', 'i', 'o', 'u');
+
+SELECT 
+       DISTINCT CITY
+  FROM STATION
+ WHERE RIGHT(CITY, 1) IN ('a', 'e', 'i', 'o', 'u') AND LEFT(CITY, 1) IN ('a', 'e', 'i', 'o', 'u');
+
+-- Weather Observation Station 9-10
+SELECT 
+       DISTINCT CITY
+  FROM STATION
+ WHERE NOT LEFT(CITY, 1) IN  ('a', 'e', 'i', 'o', 'u');
+
+SELECT 
+       DISTINCT CITY
+  FROM STATION
+ WHERE NOT RIGHT(CITY, 1) IN  ('a', 'e', 'i', 'o', 'u');
+
+-- Weather Observation Station 11-12
+SELECT 
+       DISTINCT CITY
+  FROM STATION
+ WHERE (NOT RIGHT(CITY, 1) IN ('a', 'e', 'i', 'o', 'u') OR NOT LEFT(CITY, 1) IN ('a', 'e', 'i', 'o', 'u')) ;
+
+SELECT 
+       DISTINCT CITY
+  FROM STATION
+ WHERE (NOT RIGHT(CITY, 1) IN ('a', 'e', 'i', 'o', 'u') AND NOT LEFT(CITY, 1) IN ('a', 'e', 'i', 'o', 'u')) ;

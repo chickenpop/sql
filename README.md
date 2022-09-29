@@ -14,7 +14,7 @@ MySQL
 - SQL Level 1 완료 
 - SQL Level 2 완료
 - SQL Level 3 완료
-- SQL Level 4 진행중
+- SQL Level 4 완료
 
 ## LeetCode
 
