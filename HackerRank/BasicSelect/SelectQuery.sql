@@ -45,3 +45,14 @@ SELECT C2.CONTINENT
   FROM CITY C1 
  INNER JOIN COUNTRY C2 ON C1.COUNTRYCODE = C2.CODE
  GROUP BY C2.CONTINENT;
+
+-- Type of Triangle
+-- 조건에 따른 삼각형 이름 출력하기
+SELECT 
+       CASE 
+           WHEN (A + B) <= C OR (A + C) <= B OR (B + C) <= A THEN 'Not A Triangle'
+           WHEN (A = B) AND (A = C) THEN 'Equilateral'
+           WHEN (A = B) OR (A = C) OR (B = C) THEN 'Isosceles'
+           WHEN (A <> B) AND (A <> C) THEN 'Scalene'
+       END
+  FROM TRIANGLES;
