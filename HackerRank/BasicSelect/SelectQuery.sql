@@ -56,3 +56,7 @@ SELECT
            WHEN (A <> B) AND (A <> C) THEN 'Scalene'
        END
   FROM TRIANGLES;
+
+-- The Blunder
+-- 치횐하기
+SELECT CEIL(AVG(SALARY) - AVG(REPLACE(SALARY, '0', ''))) FROM EMPLOYEES;
